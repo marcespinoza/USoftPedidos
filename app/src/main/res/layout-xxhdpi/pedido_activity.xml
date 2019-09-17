@@ -1,0 +1,426 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:id="@+id/coordinator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:tag="xxhdpi"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+    <!-- Appbar -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white" >
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/u"
+                        android:layout_gravity="center_vertical"/>
+
+             <LinearLayout
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/toolbar_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Soft"
+                        android:textSize="22sp"
+                        android:fontFamily="@font/heebobold"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/toolbar_subtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pedidos"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/heebolight"
+                        android:textColor="@color/black"/>
+             </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/encabezado_pedido"
+            android:text="Encabezado"
+            android:textSize="20sp"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/worksanbold"/>
+
+        </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardElevation="5dp"
+        card_view:cardCornerRadius="10dp"
+        android:layout_margin="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="3"
+            android:orientation="horizontal"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="CLIENTE:"/>
+
+            <AutoCompleteTextView
+                android:id="@+id/cliente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="15sp"/>
+
+            <ImageButton
+                android:id="@+id/cleancliente"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:adjustViewBounds="true"
+                android:layout_marginRight="8dp"
+                android:layout_gravity="right|center_vertical"
+                android:background="@drawable/clean_state_button"
+                android:scaleType="center"/>
+
+                <ImageButton
+                    android:id="@+id/searchcliente"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:adjustViewBounds="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:background="@drawable/ic_search"
+                    android:scaleType="center"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text="CODCLI:"/>
+
+                <TextView
+                    android:id="@+id/codcli"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:enabled="false"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text="TOTAL:"/>
+
+                <TextView
+                    android:id="@+id/totallinea"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:enabled="false"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Detalle"
+            android:textSize="20sp"
+            android:padding="10dp"
+            android:background="@drawable/encabezado_pedido"
+            android:textColor="@color/white"
+            android:fontFamily="@font/worksanbold"
+            android:gravity="left"/>
+
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardElevation="5dp"
+        card_view:cardCornerRadius="10dp"
+        android:layout_margin="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="DESART:" />
+
+
+            <AutoCompleteTextView
+                android:id="@+id/desart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="15sp" />
+
+            <ImageButton
+                android:id="@+id/clean"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:adjustViewBounds="true"
+                android:layout_marginRight="8dp"
+                android:layout_gravity="right|center_vertical"
+                android:background="@drawable/clean_state_button"
+                android:scaleType="center"/>
+
+            <ImageButton
+                android:id="@+id/searcharticulo"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:adjustViewBounds="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="8dp"
+                android:layout_gravity="right|center_vertical"
+                android:background="@drawable/ic_search"
+                android:scaleType="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="8dp"
+             android:text="CODART:"/>
+
+         <EditText
+            android:id="@+id/codart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:enabled="false"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="CANT:"/>
+
+            <EditText
+                android:id="@+id/cantped"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:inputType="number"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/cantHint"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="3dp"
+                android:text="PRECIO: $ "/>
+
+            <EditText
+                android:id="@+id/precio"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_toRightOf="@+id/cantHint"
+                android:inputType="numberDecimal"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/obser"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:text="OBS: "/>
+
+            <EditText
+                android:id="@+id/observacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/agregar"
+                android:layout_toRightOf="@+id/obser"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <ImageButton
+                android:id="@+id/agregar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:adjustViewBounds="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:scaleType="center"
+                android:src="@drawable/ic_add" />
+
+        </RelativeLayout>
+
+       </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/listapedido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sin Pedidos"
+        android:gravity="center"
+        android:textSize="17sp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/robotolight"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerpedidos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/enviar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_navigation"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_margin="8dp"
+        android:text="ENVIAR"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/button_color_states"
+        app:backgroundTintMode="multiply"
+        app:cornerRadius="15dp"
+        app:rippleColor="@color/blue_900"
+        app:strokeColor="@color/blue_700"
+        app:strokeWidth="1dp" />
+
+</LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

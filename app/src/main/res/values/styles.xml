@@ -1,0 +1,19 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/usoft</item>
+    </style>
+    <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="hintTextAppearance">@style/TextInputLayout.HintText</item>
+        <item name="boxStrokeColor">@color/usoft</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+    <style name="TextInputLayout.HintText">
+        <item name="android:textColorHint">@color/usoft</item>
+        <item name="android:textColor">@color/usoft</item>
+    </style>
+
+</resources>

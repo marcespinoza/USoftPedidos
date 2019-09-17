@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_layout"
+    android:layout_gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/custom_text_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="19sp"
+        android:fontFamily="@font/worksanbold"
+        android:padding="20dp"/>
+
+
+</LinearLayout>

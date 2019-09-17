@@ -1,0 +1,94 @@
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginBottom="3dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+    android:id="@+id/codart"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fontFamily="@font/robotobold"
+    android:textSize="16sp"
+    android:textColor="@color/green_800"/>
+
+    <TextView
+        android:id="@+id/desart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/robotolight"
+        android:textSize="16sp"
+        android:textColor="@color/blue_600"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Cantidad: "
+        android:fontFamily="@font/robotobold"/>
+
+    <TextView
+        android:id="@+id/cant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/cyan_700"
+        android:textSize="18sp"
+        android:fontFamily="@font/robotolight"
+        android:layout_marginRight="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/robotobold"
+        android:textSize="18sp"
+        android:text="Precio: $"/>
+
+    <TextView
+        android:id="@+id/preciolinea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/cyan_700"
+        android:fontFamily="@font/robotolight"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/blue_grey_100"/>
+
+</LinearLayout>
+
+ <View
+     android:layout_width="1dp"
+     android:layout_height="30dp"
+     android:layout_marginLeft="3dp"
+     android:layout_marginRight="3dp"
+     android:layout_gravity="center_vertical"
+     android:background="@color/grey_200"
+     android:rotation="180"/>
+
+ <ImageButton
+     android:id="@+id/botoneliminar"
+     android:layout_width="25dp"
+     android:layout_height="25dp"
+     android:layout_gravity="center_vertical"
+     android:layout_marginRight="10dp"
+     android:background="@drawable/ic_delete"/>
+
+</LinearLayout>

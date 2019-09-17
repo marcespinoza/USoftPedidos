@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- disabled state-->
+    <item
+        android:state_enabled="false"
+        android:drawable="@android:color/white"
+        />
+    <!-- pressed state / clicked state -->
+    <item
+        android:state_pressed="true"
+        android:state_enabled="true"
+        android:drawable="@color/grey_100"
+        />
+
+    <!-- enabled state / default state-->
+    <item
+        android:state_enabled="true"
+        android:drawable="@drawable/ic_close"
+        />
+</selector>
