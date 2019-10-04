@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -33,6 +35,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.usoft.pedidos.Adapter.AutoCompleteArticuloAdapter;
 import com.usoft.pedidos.Adapter.AutoCompleteClienteAdapter;
 import com.usoft.pedidos.Adapter.RecyclerPedido;
+import com.usoft.pedidos.BuildConfig;
 import com.usoft.pedidos.Dom.Articulo;
 import com.usoft.pedidos.Dom.Cliente;
 import com.usoft.pedidos.Dom.Pedido;
@@ -40,6 +43,7 @@ import com.usoft.pedidos.Interface.PedidoInterface;
 import com.usoft.pedidos.Presentador.PedidoPresentador;
 import com.usoft.pedidos.R;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -71,6 +75,8 @@ public class PedidoActivity extends AppCompatActivity implements PedidoInterface
     @BindView(R.id.enviar)  MaterialButton enviarBoton;
     @BindView(R.id.coordinator)  CoordinatorLayout coordinator;
     @BindView(R.id.toolbar)  Toolbar toolbar;
+    @BindView(R.id.androidversion2) TextView androidversion;
+    @BindView(R.id.versionname2) TextView versionname;
     AlertDialog alertDialogArticulos;
     AlertDialog alertDialogClientes;
     AlertDialog alertDialogNroPedido;
@@ -91,9 +97,10 @@ public class PedidoActivity extends AppCompatActivity implements PedidoInterface
         super.onCreate(savedInstanceState);
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.pedido_activity, null);
-        Log.i("LAYOUT",""+(String)view.getTag());
         setContentView(view);
         ButterKnife.bind(this);
+        androidversion.setText(android.os.Build.VERSION.RELEASE.substring(0, 3));
+        versionname.setText(BuildConfig.VERSION_NAME);
         setSupportActionBar(toolbar);
         totallinea.setText("0");
         recyclerPedido.setLayoutManager(new LinearLayoutManager(PedidoActivity.this));
@@ -178,6 +185,9 @@ public class PedidoActivity extends AppCompatActivity implements PedidoInterface
         limpiarCliente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ArrayList<Articulo> art = new ArrayList<>();
+                desart.setAdapter(new AutoCompleteArticuloAdapter(getApplicationContext(), R.layout.autocompletearticulo_row, art));
+                limpiarDetalle();
                 cliente.setText("");
                 codcli.setText("");
             }
@@ -279,6 +289,8 @@ public class PedidoActivity extends AppCompatActivity implements PedidoInterface
     }
 
     private void obtenerClientes(){
+        ArrayList<Articulo> art = new ArrayList<>();
+        desart.setAdapter(new AutoCompleteArticuloAdapter(getApplicationContext(), R.layout.autocompletearticulo_row, art));
         runOnUiThread(new Runnable() {
             public void run() {
                 pdialog.showProgressDialog("Obteniendo clientes..");
@@ -290,7 +302,7 @@ public class PedidoActivity extends AppCompatActivity implements PedidoInterface
     private void obtenerArticulos(){
         alertDialogArticulos.setMessage("Obteniendo articulos..");
         alertDialogArticulos.show();
-        presentador.articulos(desart.getText().toString());
+        presentador.articulos(desart.getText().toString(), codcli.getText().toString());
     }
 
     private void obtenernPedido(){
@@ -362,7 +374,6 @@ public class PedidoActivity extends AppCompatActivity implements PedidoInterface
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Cliente clientes = (Cliente) adapterView.getItemAtPosition(i);
-                        codcli.setText(clientes.getCodcli());
                         cliente.setText(clientes.getNomcli());
                         codcli.setText(clientes.getNrocuenta());
                         codigoPersona = clientes.getPersona();
@@ -450,7 +461,6 @@ public class PedidoActivity extends AppCompatActivity implements PedidoInterface
             startActivity(intent);
             finish();
         }
-
         return super.onOptionsItemSelected(item);
     }
 

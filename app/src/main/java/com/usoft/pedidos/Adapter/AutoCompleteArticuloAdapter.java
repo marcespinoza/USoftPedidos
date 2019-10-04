@@ -21,11 +21,13 @@ import java.util.Comparator;
 import java.util.List;
 
 public class AutoCompleteArticuloAdapter extends ArrayAdapter<Articulo> {
-    private List<Articulo> countryListFull;
+    private List<Articulo> articuloLista;
+    Context context;
 
     public AutoCompleteArticuloAdapter(@NonNull Context context, int textViewResourceId, @NonNull List<Articulo> countryList) {
         super(context, textViewResourceId, countryList);
-        countryListFull = new ArrayList<>(countryList);
+        articuloLista = new ArrayList<>(countryList);
+        this.context = context;
     }
 
     @NonNull
@@ -42,13 +44,16 @@ public class AutoCompleteArticuloAdapter extends ArrayAdapter<Articulo> {
                     R.layout.autocompletearticulo_row, parent, false
             );
         }
-
         TextView textViewName = convertView.findViewById(R.id.descripcionart);
+        Articulo articulo = getItem(position);
 
-        Articulo Articulo = getItem(position);
-
-        if (Articulo != null) {
-            textViewName.setText(Articulo.getDesart());
+        if (articulo != null) {
+            if(articulo.getPrecio_original().equals("null")){
+                textViewName.setTextColor(context.getResources().getColor(R.color.red_300));
+            }else{
+                textViewName.setTextColor(context.getResources().getColor(R.color.black));
+            }
+            textViewName.setText(articulo.getDesart());
         }
 
         return convertView;
@@ -61,11 +66,11 @@ public class AutoCompleteArticuloAdapter extends ArrayAdapter<Articulo> {
             List<Articulo> suggestions = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {
-                suggestions.addAll(countryListFull);
+                suggestions.addAll(articuloLista);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
-                for (Articulo item : countryListFull) {
+                for (Articulo item : articuloLista) {
                     if (item.getDesart().toLowerCase().contains(filterPattern)) {
                         suggestions.add(item);
                     }

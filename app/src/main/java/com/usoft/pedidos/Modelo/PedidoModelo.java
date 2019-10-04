@@ -37,14 +37,16 @@ public class PedidoModelo implements PedidoInterface.Modelo {
     PedidoInterface.Presentador presentador;
     Context context;
     SharedPreferences sharedPref;
+    String urlservidor = "";
 
     public PedidoModelo(PedidoPresentador presentador) {
         this.presentador=presentador;
         context = GlobalApplication.getContext();
         sharedPref = context.getSharedPreferences("datosesion", Context.MODE_PRIVATE);
+        urlservidor = sharedPref.getString("servidor","");
     }
 
-    public void getArticulos(String nombreArticulo){
+    public void getArticulos(String nombreArticulo, String codigoCliente){
         OkHttpClient client = new OkHttpClient.Builder()
         .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
@@ -54,11 +56,11 @@ public class PedidoModelo implements PedidoInterface.Modelo {
         formBody = new FormBody.Builder()
                 /*Encabezado*/
                 .add("nombrearticulo", nombreArticulo)
+                .add("codigocliente", codigoCliente)
                 .build();
 
-
         Request request = new Request.Builder()
-                .url("http://aromacos.selfip.info:10701/api/index.php/api/getarticulos")
+                .url(urlservidor+"/getarticulos")
                 .post(formBody)
                 .build();
         client.newCall(request).enqueue(new Callback() {
@@ -90,6 +92,8 @@ public class PedidoModelo implements PedidoInterface.Modelo {
                                 articulo.setDesart(desart);
                                 articulo.setCodart(codart);
                                 articulo.setPrecio(precio);
+                                articulo.setPrecio_original(precio);
+                                Log.i("PRECIOO",""+precio);
                                 if(precio.equals("null")){
                                   articulo.setPrecio("0");
                                 }else{
@@ -128,7 +132,7 @@ public class PedidoModelo implements PedidoInterface.Modelo {
                 .build();
 
         Request request = new Request.Builder()
-                .url("http://aromacos.selfip.info:10701/api/index.php/api/getclientes")
+                .url(urlservidor+"/getclientes")
                 .post(formBody)
                 .build();
 
@@ -183,7 +187,7 @@ public class PedidoModelo implements PedidoInterface.Modelo {
     }
 
     public void getNroPedido(){
-        String url = "http://aromacos.selfip.info:10701/api/index.php/api/proximopedido";
+        String url = urlservidor+"/proximopedido";
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
@@ -245,7 +249,7 @@ public class PedidoModelo implements PedidoInterface.Modelo {
                     .build();
 
         Request request = new Request.Builder()
-                .url("http://aromacos.selfip.info:10701/api/index.php/api/pedido")
+                .url(urlservidor+"/pedido")
                 .post(formBody)
                 .build();
 
@@ -282,7 +286,7 @@ public class PedidoModelo implements PedidoInterface.Modelo {
                 .build();
 
         Request request = new Request.Builder()
-                .url("http://aromacos.selfip.info:10701/api/index.php/api/updatenropedido")
+                .url(urlservidor+"/updatenropedido")
                 .post(formBody)
                 .build();
 

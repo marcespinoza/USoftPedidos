@@ -35,9 +35,7 @@ public class LoginModelo implements LoginInterface.Modelo {
     Context context;
     SharedPreferences sharedPref;
     String urlServidor;
-    private static final String url = "jdbc:mysql://192.168.0.192:3306/myDB";
-    private static final String user = "hitesh";
-    private static final String pass = "1234";
+    String urlhost = "";
 
     public LoginModelo(LoginPresentador presentador){
         this.presentador=presentador;
@@ -55,49 +53,26 @@ public class LoginModelo implements LoginInterface.Modelo {
         new ConsultarEmpresa().execute(empresa);
     }
 
-    public void enviarEmpresa(String emp){
-        try{
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-        }catch(Exception e){
-            System.err.println("Cannot create connection");
-        }
-        try{
-            Connection connection = DriverManager.getConnection("jdbc:mysql://usoft.com.uy/usoft201_mobile?useUnicode=true", "usoft201_mobile", "orHfV3Cib5YoJZmEq4");
-            String query = "SELECT * FROM empresas WHERE empresa = ?";
-            PreparedStatement stmt = connection.prepareStatement(query);
-            stmt.setString(1, emp);
-            ResultSet rs = stmt.executeQuery();
-            if(rs.next()){
-                String nombre = rs.getString(1);
-            }
-        }catch(Exception e){
-            System.err.println("ErrorDB"+e.getMessage());
-        }
-    }
 
     class ConsultarEmpresa extends AsyncTask<String, Void, Boolean> {
 
-        String empresa = "";
-
         @Override
         protected Boolean doInBackground(String... params) {
-            String empresa = "";
             try{
                 Class.forName("com.mysql.jdbc.Driver").newInstance();
-            }catch(Exception e){
-                System.err.println("Cannot create connection");
-            }
-            try{
-                Connection connection = DriverManager.getConnection("jdbc:mysql://usoft.com.uy/usoft201_mobile?useUnicode=true", "usoft201_mobile", "orHfV3Cib5YoJZmEq4");
-                String query = "SELECT * FROM empresas WHERE empresa like ?";
+                Connection connection = DriverManager.getConnection("jdbc:mysql://usoft.selfip.info:5806/usoft_mobile?useUnicode=true", "usoft_mobile", "orHfV3Cib5YoJZmEq4");
+                String query = "SELECT * FROM empresas WHERE empresa like '"+params[0]+"'";
                 PreparedStatement stmt = connection.prepareStatement(query);
-                stmt.setString(1, empresa);
+               /* stmt.setString(1, params[0]);*/
                 ResultSet rs = stmt.executeQuery();
                 if(rs.next()){
-                    empresa = rs.getString(2);
+                    urlhost = rs.getString(2);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("servidor", urlhost);
+                    editor.commit();
                     return true;
                 }else{
-                    empresa = "vacio";
+                    urlhost = "vacio";
                     return false;
                 }
             }catch(Exception e){
@@ -107,7 +82,7 @@ public class LoginModelo implements LoginInterface.Modelo {
 
         @Override
         protected void onPostExecute(Boolean result) {
-           if(empresa.equals("vacio") && !result) {
+           if(urlhost.equals("vacio") && !result) {
                presentador.resultadoConexion(result, "No se encontró empresa.");
            }else if(!result){
                presentador.resultadoConexion(result, "Error de conexión.");
@@ -119,8 +94,8 @@ public class LoginModelo implements LoginInterface.Modelo {
     }
 
     private void loginRequest(String usuario, String contraseña) {
-        urlServidor = sharedPref.getString("urlservidor","");
-            String url = "http://aromacos.selfip.info:10701/api/index.php/api/getlogin";
+        urlServidor = sharedPref.getString("servidor","");
+            String url = urlServidor+"/getlogin";
             OkHttpClient client = new OkHttpClient.Builder()
                     .connectTimeout(10, TimeUnit.SECONDS)
                     .readTimeout(10, TimeUnit.SECONDS)

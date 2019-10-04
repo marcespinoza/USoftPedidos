@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -21,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 import com.jeevandeshmukh.glidetoastlib.GlideToast;
+import com.usoft.pedidos.BuildConfig;
 import com.usoft.pedidos.Interface.LoginInterface;
 import com.usoft.pedidos.Presentador.LoginPresentador;
 import com.usoft.pedidos.R;
@@ -39,6 +41,8 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface.V
     @BindView(R.id.usuario) EditText usuario;
     @BindView(R.id.clave) EditText clave;
     @BindView(R.id.logologin) ImageView logoLogin;
+    @BindView(R.id.androidversion) TextView androidversion;
+    @BindView(R.id.versionname) TextView versionname;
     ProgressBar progressBar;
     AlertDialog alertDialog;
     SharedPreferences sharedPref;
@@ -58,6 +62,8 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface.V
         errorEmpresa = dialog.findViewById(R.id.textoError);
         errorEmpresa.setVisibility(View.INVISIBLE);
         ButterKnife.bind(this);
+        androidversion.setText(android.os.Build.VERSION.RELEASE.substring(0, 3));
+        versionname.setText(BuildConfig.VERSION_NAME);
         alertDialog = new  SpotsDialog.Builder().setContext(this).build();
         presentador = new LoginPresentador(this);
         sharedPref = this.getSharedPreferences("datosesion",Context.MODE_PRIVATE);
@@ -68,10 +74,11 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface.V
                 loginUsuario(usuario.getText().toString(), clave.getText().toString());
             }
         });
-        /*if(sesion){
+        if(sesion){
             login();
-        }*/
-        mostrarDialogoConexion();
+        }else{
+            mostrarDialogoConexion();
+        }
     }
 
     public void mostrarDialogoConexion(){
@@ -126,9 +133,9 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface.V
         if(b){
            dialog.dismiss();
         }else{
-            empresaText.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake));
-            enviarConexion.setEnabled(true);
-            empresaText.setEnabled(true);
+           empresaText.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake));
+           enviarConexion.setEnabled(true);
+           empresaText.setEnabled(true);
            errorEmpresa.setVisibility(View.VISIBLE);
            errorEmpresa.setText(mensaje);
         }
@@ -136,11 +143,7 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface.V
 
 
     private void login(){
-        String usu = sharedPref.getString("usuario", "");
         Intent intent = new Intent(this, PedidoActivity.class);
-        if(usuario.getText().toString().equalsIgnoreCase("admin") || usu.equalsIgnoreCase("admin")){
-            intent.putExtra("admin",true);
-        }
         startActivity(intent);
         finish();
     }

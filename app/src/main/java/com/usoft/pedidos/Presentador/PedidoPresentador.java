@@ -18,8 +18,8 @@ public class PedidoPresentador implements PedidoInterface.Presentador {
     }
 
     @Override
-    public void articulos(String nombre) {
-        modelo.getArticulos(nombre);
+    public void articulos(String nombre, String codigoCliente) {
+        modelo.getArticulos(nombre, codigoCliente);
     }
 
 

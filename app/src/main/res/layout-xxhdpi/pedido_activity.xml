@@ -45,29 +45,65 @@
                         android:src="@drawable/u"
                         android:layout_gravity="center_vertical"/>
 
-             <LinearLayout
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/toolbar_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Soft"
+                        android:text="Soft Pedidos"
                         android:textSize="22sp"
                         android:fontFamily="@font/heebobold"
                         android:textColor="@color/black"/>
 
+                   <LinearLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="-10dp"
+                       android:orientation="horizontal">
+
                     <TextView
-                        android:id="@+id/toolbar_subtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pedidos"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/heebolight"
-                        android:textColor="@color/black"/>
-             </LinearLayout>
+                        android:textColor="@color/black"
+                        android:textSize="7sp"
+                        android:text="App: "/>
+
+                    <TextView
+                        android:id="@+id/versionname2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="7sp"/>
+
+                    <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:textColor="@color/black"
+                       android:text=" - "
+                       android:textSize="7sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="7sp"
+                        android:text="Android: "/>
+
+                    <TextView
+                        android:id="@+id/androidversion2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="7sp"/>
+
+                    </LinearLayout>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

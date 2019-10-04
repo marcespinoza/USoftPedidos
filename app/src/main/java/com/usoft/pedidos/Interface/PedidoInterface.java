@@ -17,7 +17,7 @@ public interface PedidoInterface {
     }
 
     interface Presentador{
-        void articulos(String nombre);
+        void articulos(String nombre, String codigoCliente);
         void devolverArticulos(ArrayList articulos);
         void mostrarError(String error);
         void enviarLista(ArrayList<Pedido> list, String np, String cc);
@@ -30,7 +30,7 @@ public interface PedidoInterface {
     }
 
     interface Modelo{
-        void getArticulos(String nombre);
+        void getArticulos(String nombre, String codigoCliente);
         void enviarListaPedidos(ArrayList<Pedido> list, String np, String cc);
         void obtenerNroPedido();
 

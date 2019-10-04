@@ -10,6 +10,15 @@ public class Articulo {
     String familia;
     String precio;
     String ultprc;
+    String precio_original;
+
+    public String getPrecio_original() {
+        return precio_original;
+    }
+
+    public void setPrecio_original(String precio_original) {
+        this.precio_original = precio_original;
+    }
 
     public String getPrecio() {
         return precio;
