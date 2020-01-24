@@ -77,11 +77,11 @@ public class PedidoActivity extends AppCompatActivity implements PedidoInterface
     @BindView(R.id.toolbar)  Toolbar toolbar;
     @BindView(R.id.androidversion2) TextView androidversion;
     @BindView(R.id.versionname2) TextView versionname;
+    @BindView(R.id.scan) ImageButton scan;
     AlertDialog alertDialogArticulos;
     AlertDialog alertDialogClientes;
     AlertDialog alertDialogNroPedido;
     AlertDialog enviarPedido;
-    private int mCount = 0;
     RecyclerPedido adapter;
     private ArrayList<Pedido> lPedidos = new ArrayList<>();
     private BigDecimal precioArt;
@@ -91,6 +91,7 @@ public class PedidoActivity extends AppCompatActivity implements PedidoInterface
     ProgressDialog pdialog;
     String  precioUnitario, codigoPersona;
     BigDecimal totalParcial;
+    static final int REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,7 +100,7 @@ public class PedidoActivity extends AppCompatActivity implements PedidoInterface
         View view = inflater.inflate(R.layout.pedido_activity, null);
         setContentView(view);
         ButterKnife.bind(this);
-        androidversion.setText(android.os.Build.VERSION.RELEASE.substring(0, 3));
+        androidversion.setText(android.os.Build.VERSION.RELEASE.substring(0, 1));
         versionname.setText(BuildConfig.VERSION_NAME);
         setSupportActionBar(toolbar);
         totallinea.setText("0");
@@ -171,6 +172,13 @@ public class PedidoActivity extends AppCompatActivity implements PedidoInterface
                 InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                 obtenerArticulos();
+            }
+        });
+        scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), LectorActivity.class);
+                startActivityForResult(i, REQUEST_CODE);
             }
         });
         desart.setEnabled(false);
@@ -272,11 +280,11 @@ public class PedidoActivity extends AppCompatActivity implements PedidoInterface
                 }
             }
         });
-
         cliente.requestFocus();
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(cliente, InputMethodManager.SHOW_IMPLICIT);
         presentador = new PedidoPresentador(this);
+
     }
 
 
@@ -322,14 +330,7 @@ public class PedidoActivity extends AppCompatActivity implements PedidoInterface
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Articulo articulo = (Articulo) adapterView.getItemAtPosition(i);
-                        codart.setText(articulo.getCodart());
-                        precioArt = new BigDecimal(articulo.getPrecio());
-                        precioUnitario = String.valueOf(precioArt);
-                        precio.setText(String.valueOf(precioArt));
-                        cantPed.setText("1");
-                        cantPed.requestFocus();
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.showSoftInput(cantPed, InputMethodManager.SHOW_IMPLICIT);
+                        setArticulo(articulo);
                     }
                 });
             }
@@ -346,6 +347,17 @@ public class PedidoActivity extends AppCompatActivity implements PedidoInterface
         codart.setText("");
         precio.setText("");
         cantPed.setText("");
+    }
+
+    public void setArticulo(Articulo articulo){
+        codart.setText(articulo.getCodart());
+        precioArt = new BigDecimal(articulo.getPrecio());
+        precioUnitario = String.valueOf(precioArt);
+        precio.setText(String.valueOf(precioArt));
+        cantPed.setText("1");
+        cantPed.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(cantPed, InputMethodManager.SHOW_IMPLICIT);
     }
 
     @Override
@@ -464,4 +476,13 @@ public class PedidoActivity extends AppCompatActivity implements PedidoInterface
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            Articulo articulo = (Articulo) data.getSerializableExtra("articulo");
+            desart.setText(articulo.getDescripcion());
+            setArticulo(articulo);
+        }
+    }
 }

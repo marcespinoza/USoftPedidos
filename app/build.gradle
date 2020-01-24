@@ -7,7 +7,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0"
+        versionName "1.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     applicationVariants.all { variant ->
@@ -40,7 +40,7 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.jakewharton:butterknife:10.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
-    implementation 'uk.co.brightec.kbarcode:kbarcode:1.0.3'
+    implementation 'uk.co.brightec.kbarcode:kbarcode:1.1.0'
     implementation 'com.google.firebase:firebase-core:16.0.3'
     implementation 'com.google.firebase:firebase-ml-vision:19.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
@@ -53,3 +53,4 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation files('libs/mysql-connector-java-5.1.48.jar')
 }
+apply plugin: 'com.google.gms.google-services'

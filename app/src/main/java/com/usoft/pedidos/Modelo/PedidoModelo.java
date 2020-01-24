@@ -36,17 +36,19 @@ public class PedidoModelo implements PedidoInterface.Modelo {
 
     PedidoInterface.Presentador presentador;
     Context context;
-    SharedPreferences sharedPref;
+    SharedPreferences sharedPref, sharedPrefConexion;
     String urlservidor = "";
 
     public PedidoModelo(PedidoPresentador presentador) {
         this.presentador=presentador;
         context = GlobalApplication.getContext();
         sharedPref = context.getSharedPreferences("datosesion", Context.MODE_PRIVATE);
-        urlservidor = sharedPref.getString("servidor","");
+        sharedPrefConexion = context.getSharedPreferences("datosconexion", Context.MODE_PRIVATE);
+        urlservidor = sharedPrefConexion.getString("servidor","");
     }
 
     public void getArticulos(String nombreArticulo, String codigoCliente){
+        String empresa = sharedPrefConexion.getString("empresa","");
         OkHttpClient client = new OkHttpClient.Builder()
         .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
@@ -57,6 +59,7 @@ public class PedidoModelo implements PedidoInterface.Modelo {
                 /*Encabezado*/
                 .add("nombrearticulo", nombreArticulo)
                 .add("codigocliente", codigoCliente)
+                .add("empresa", empresa)
                 .build();
 
         Request request = new Request.Builder()
@@ -121,6 +124,7 @@ public class PedidoModelo implements PedidoInterface.Modelo {
 }
 
     public void getClientes(String cuenta){
+        String empresa = sharedPrefConexion.getString("empresa","");
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
@@ -129,6 +133,7 @@ public class PedidoModelo implements PedidoInterface.Modelo {
         formBody = new FormBody.Builder()
                 /*Encabezado*/
                 .add("nrocuenta", cuenta)
+                .add("empresa",empresa)
                 .build();
 
         Request request = new Request.Builder()
@@ -187,14 +192,22 @@ public class PedidoModelo implements PedidoInterface.Modelo {
     }
 
     public void getNroPedido(){
+        String empresa = sharedPrefConexion.getString("empresa","");
         String url = urlservidor+"/proximopedido";
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS).build();
 
+        RequestBody formBody;
+        formBody = new FormBody.Builder()
+                /*Encabezado*/
+                .add("empresa",empresa)
+                .build();
+
         Request request = new Request.Builder()
                 .url(url)
+                .post(formBody)
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -223,6 +236,7 @@ public class PedidoModelo implements PedidoInterface.Modelo {
     }
 
     public void enviarPedidos(ArrayList<Pedido> lPedidos, String np, String cc){
+        String empresa = sharedPrefConexion.getString("empresa","");
         String usuario = sharedPref.getString("usuario","");
         RequestBody formBody;
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
@@ -246,6 +260,7 @@ public class PedidoModelo implements PedidoInterface.Modelo {
                     .add("codcli", lPedidos.get(i).getNro_cuenta())
                     .add("fechaalta", date2)
                     .add("usuario", usuario)
+                    .add("empresa",empresa)
                     .build();
 
         Request request = new Request.Builder()
@@ -275,6 +290,7 @@ public class PedidoModelo implements PedidoInterface.Modelo {
     }
 
     public void updateNroPedido(String nropedido){
+        String empresa = sharedPrefConexion.getString("empresa","");
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
@@ -283,6 +299,7 @@ public class PedidoModelo implements PedidoInterface.Modelo {
         formBody = new FormBody.Builder()
                 /*Encabezado*/
                 .add("proximo", nropedido)
+                .add("empresa",empresa)
                 .build();
 
         Request request = new Request.Builder()

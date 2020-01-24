@@ -1,6 +1,8 @@
 package com.usoft.pedidos.Dom;
 
-public class Articulo {
+import java.io.Serializable;
+
+public class Articulo implements Serializable {
 
     public Articulo() {
     }
@@ -11,6 +13,42 @@ public class Articulo {
     String precio;
     String ultprc;
     String precio_original;
+    String descripcion;
+    String descripcioncorta;
+    String marca;
+    String descripcionMaestro;
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public String getDescripcionMaestro() {
+        return descripcionMaestro;
+    }
+
+    public void setDescripcionMaestro(String descripcionMaestro) {
+        this.descripcionMaestro = descripcionMaestro;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getDescripcioncorta() {
+        return descripcioncorta;
+    }
+
+    public void setDescripcioncorta(String descripcioncorta) {
+        this.descripcioncorta = descripcioncorta;
+    }
 
     public String getPrecio_original() {
         return precio_original;
@@ -60,4 +98,6 @@ public class Articulo {
     public void setFamilia(String familia) {
         this.familia = familia;
     }
+
+
 }

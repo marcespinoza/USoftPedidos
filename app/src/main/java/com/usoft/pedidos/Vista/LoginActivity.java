@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface.V
         errorEmpresa = dialog.findViewById(R.id.textoError);
         errorEmpresa.setVisibility(View.INVISIBLE);
         ButterKnife.bind(this);
-        androidversion.setText(android.os.Build.VERSION.RELEASE.substring(0, 3));
+        androidversion.setText(android.os.Build.VERSION.RELEASE.substring(0, 1));
         versionname.setText(BuildConfig.VERSION_NAME);
         alertDialog = new  SpotsDialog.Builder().setContext(this).build();
         presentador = new LoginPresentador(this);
