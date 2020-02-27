@@ -238,6 +238,7 @@ public class PedidoModelo implements PedidoInterface.Modelo {
     public void enviarPedidos(ArrayList<Pedido> lPedidos, String np, String cc){
         String empresa = sharedPrefConexion.getString("empresa","");
         String usuario = sharedPref.getString("usuario","");
+        String url = urlservidor+"/pedido";
         RequestBody formBody;
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         String date2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
@@ -264,7 +265,7 @@ public class PedidoModelo implements PedidoInterface.Modelo {
                     .build();
 
         Request request = new Request.Builder()
-                .url(urlservidor+"/pedido")
+                .url(url)
                 .post(formBody)
                 .build();
 
@@ -276,7 +277,9 @@ public class PedidoModelo implements PedidoInterface.Modelo {
 
                      @Override
                      public void onResponse(Call call, final Response response) throws IOException {
-                         Log.i("respuesta","respuesta"+response.toString());
+                         if (!response.isSuccessful()) {
+                           Log.i("respuesta","respuesta"+response.toString());
+                         }
                      }
                  });
 
