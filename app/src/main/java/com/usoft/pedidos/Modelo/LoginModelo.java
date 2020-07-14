@@ -35,7 +35,7 @@ public class LoginModelo implements LoginInterface.Modelo {
     Context context;
     SharedPreferences sharedPref, sharedPrefConexion;
     String urlServidor;
-    String urlhost = "";
+    String bandera = "";
 
     public LoginModelo(LoginPresentador presentador){
         this.presentador=presentador;
@@ -61,28 +61,24 @@ public class LoginModelo implements LoginInterface.Modelo {
         protected Boolean doInBackground(String... params) {
             try{
                 Class.forName("com.mysql.jdbc.Driver").newInstance();
-                Connection connection = DriverManager.getConnection("jdbc:mysql://usoft.selfip.info:5806/usoft_mobile?useUnicode=true", "usoft_mobile", "orHfV3Cib5YoJZmEq4");
-                String query = "SELECT * FROM empresas WHERE empresa like '"+params[0]+"' and sistema='PEDIDOS'";
+                Connection connection = DriverManager.getConnection("jdbc:mysql://usoftuy.ddns.net:5806/usoft_mobile?useUnicode=true", "usoft_mobile", "orHfV3Cib5YoJZmEq4");
+                String query = "SELECT host, habilitado FROM empresas WHERE empresa like '"+params[0]+"' and sistema='PEDIDOS'";
                 PreparedStatement stmt = connection.prepareStatement(query);
                /* stmt.setString(1, params[0]);*/
                 ResultSet rs = stmt.executeQuery();
                 if(rs.next()){
-                    String host = rs.getString(3);
-                    String usuario = rs.getString(4);
-                    String clave = rs.getString(5);
-                    String bd = rs.getString(6);
-                    urlhost = rs.getString(8);
+                    String host = rs.getString(1);
+                    if(rs.getString(2).equals("N")){
+                        bandera = "N";
+                        return false;
+                    }
                     SharedPreferences.Editor editor = sharedPrefConexion.edit();
                     editor.putString("host", host);
-                    editor.putString("bd", bd);
-                    editor.putString("usuariobd", usuario);
-                    editor.putString("clave", clave);
-                    editor.putString("servidor", urlhost);
                     editor.putString("empresa", params[0]);
                     editor.commit();
                     return true;
                 }else{
-                    urlhost = "vacio";
+                    bandera = "vacio";
                     return false;
                 }
             }catch(Exception e){
@@ -92,8 +88,10 @@ public class LoginModelo implements LoginInterface.Modelo {
 
         @Override
         protected void onPostExecute(Boolean result) {
-           if(urlhost.equals("vacio") && !result) {
+           if(bandera.equals("vacio") && !result) {
                presentador.resultadoConexion(result, "No se encontró empresa.");
+           }else if(bandera.equals("N") && !result) {
+                   presentador.resultadoConexion(result, "Empresa no habilitada.");
            }else if(!result){
                presentador.resultadoConexion(result, "Error de conexión.");
            }else{
@@ -106,7 +104,8 @@ public class LoginModelo implements LoginInterface.Modelo {
     private void loginRequest(String usuario, String contraseña) {
             urlServidor = sharedPref.getString("servidor","");
             String empresa = sharedPrefConexion.getString("empresa","");
-            String url = "http://usoft.selfip.info:10701/api/index.php/api/getlogin";
+            String host = sharedPrefConexion.getString("host","");
+            String url = "http://"+host+":10701/api/index.php/api/getlogin";
             OkHttpClient client = new OkHttpClient.Builder()
                     .connectTimeout(10, TimeUnit.SECONDS)
                     .readTimeout(10, TimeUnit.SECONDS)

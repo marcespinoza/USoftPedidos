@@ -1,13 +1,21 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('F:\\Workana projects\\USoftPedidos\\usoft_pedidos.jks')
+            storePassword 'pedidos'
+            keyAlias = 'pedidos'
+            keyPassword 'pedidos'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.usoft.pedidos"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.2"
+        versionCode 3
+        versionName "1.4.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     applicationVariants.all { variant ->
@@ -19,6 +27,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {

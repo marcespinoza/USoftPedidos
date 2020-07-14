@@ -37,18 +37,19 @@ public class PedidoModelo implements PedidoInterface.Modelo {
     PedidoInterface.Presentador presentador;
     Context context;
     SharedPreferences sharedPref, sharedPrefConexion;
-    String urlservidor = "";
+    String urlServidor = "";
 
     public PedidoModelo(PedidoPresentador presentador) {
         this.presentador=presentador;
         context = GlobalApplication.getContext();
         sharedPref = context.getSharedPreferences("datosesion", Context.MODE_PRIVATE);
         sharedPrefConexion = context.getSharedPreferences("datosconexion", Context.MODE_PRIVATE);
-        urlservidor = sharedPrefConexion.getString("servidor","");
+        urlServidor = sharedPrefConexion.getString("host","");
     }
 
     public void getArticulos(String nombreArticulo, String codigoCliente){
         String empresa = sharedPrefConexion.getString("empresa","");
+        String url = "http://"+urlServidor+":10701/api/index.php/api/getarticulos";
         OkHttpClient client = new OkHttpClient.Builder()
         .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
@@ -63,7 +64,7 @@ public class PedidoModelo implements PedidoInterface.Modelo {
                 .build();
 
         Request request = new Request.Builder()
-                .url(urlservidor+"/getarticulos")
+                .url(url)
                 .post(formBody)
                 .build();
         client.newCall(request).enqueue(new Callback() {
@@ -125,6 +126,7 @@ public class PedidoModelo implements PedidoInterface.Modelo {
 
     public void getClientes(String cuenta){
         String empresa = sharedPrefConexion.getString("empresa","");
+        String url = "http://"+urlServidor+":10701/api/index.php/api/getclientes";
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
@@ -137,7 +139,7 @@ public class PedidoModelo implements PedidoInterface.Modelo {
                 .build();
 
         Request request = new Request.Builder()
-                .url(urlservidor+"/getclientes")
+                .url(url)
                 .post(formBody)
                 .build();
 
@@ -193,7 +195,7 @@ public class PedidoModelo implements PedidoInterface.Modelo {
 
     public void getNroPedido(){
         String empresa = sharedPrefConexion.getString("empresa","");
-        String url = urlservidor+"/proximopedido";
+        String url = "http://"+urlServidor+":10701/api/index.php/api/proximopedido";
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
@@ -238,7 +240,7 @@ public class PedidoModelo implements PedidoInterface.Modelo {
     public void enviarPedidos(ArrayList<Pedido> lPedidos, String np, String cc){
         String empresa = sharedPrefConexion.getString("empresa","");
         String usuario = sharedPref.getString("usuario","");
-        String url = urlservidor+"/pedido";
+        String url = "http://"+urlServidor+":10701/api/index.php/api/pedido";
         RequestBody formBody;
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         String date2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
@@ -294,6 +296,7 @@ public class PedidoModelo implements PedidoInterface.Modelo {
 
     public void updateNroPedido(String nropedido){
         String empresa = sharedPrefConexion.getString("empresa","");
+        String url = "http://"+urlServidor+":10701/api/index.php/api/updatenropedido";
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
@@ -306,7 +309,7 @@ public class PedidoModelo implements PedidoInterface.Modelo {
                 .build();
 
         Request request = new Request.Builder()
-                .url(urlservidor+"/updatenropedido")
+                .url(url)
                 .post(formBody)
                 .build();
 

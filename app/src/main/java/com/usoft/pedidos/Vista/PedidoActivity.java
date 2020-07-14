@@ -66,8 +66,7 @@ public class PedidoActivity extends AppCompatActivity implements PedidoInterface
     @BindView(R.id.searchcliente) ImageButton buscarcliente;
     @BindView(R.id.cleancliente) ImageButton limpiarCliente;
     @BindView(R.id.searcharticulo) ImageButton buscararticulo;
-    @BindView(R.id.recyclerpedidos)
-    RecyclerView recyclerPedido;
+    @BindView(R.id.recyclerpedidos) RecyclerView recyclerPedido;
     @BindView(R.id.precio) EditText precio;
     @BindView(R.id.cantped) EditText cantPed;
     @BindView(R.id.listapedido) TextView tituloLista;

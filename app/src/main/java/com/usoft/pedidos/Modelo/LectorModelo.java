@@ -54,7 +54,7 @@ public class LectorModelo implements LectorInterface.Modelo {
     public void getArticulo(String codart) {
         urlServidor = sharedPrefConexion.getString("servidor","");
         String empresa = sharedPrefConexion.getString("empresa","");
-        String url = urlServidor+"/getarticulo";
+        String url = "http://"+urlServidor+":10701/api/index.php/api/getarticulo";
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
@@ -116,7 +116,7 @@ public class LectorModelo implements LectorInterface.Modelo {
                 .build();
 
         Request request = new Request.Builder()
-                .url("http://usoft.selfip.info:10701/api/index.php/api/articuloimagen")
+                .url("http://usoftuy.ddns.net:10701/api/index.php/api/articuloimagen")
                 .post(formBody)
                 .build();
 
